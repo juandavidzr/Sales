@@ -23,12 +23,78 @@ namespace Sales.API.Controllers
             return Ok(await _context.Countries.ToListAsync());
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetAsync(int id)
+        {
+            var contry = await _context.Countries.FirstOrDefaultAsync(x=>x.Id == id);
+            if (contry == null)
+            {
+                return NotFound();
+            }
+            return Ok(contry);
+        }
+
         [HttpPost]
         public async Task<ActionResult> PostAsync(Country country)
         {
-            _context.Countries.Add(country);
+            try
+            {
+                _context.Add(country);
+                await _context.SaveChangesAsync();
+                return Ok(country);
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                if (dbUpdateException.InnerException!.Message.Contains("duplicate"))
+                {
+                    return BadRequest("Ya existe una ciudad con el mismo nombre.");
+                }
+
+                return BadRequest(dbUpdateException.Message);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> PutAsync(Country country)
+        {
+            try
+            {
+                _context.Update(country);
+                await _context.SaveChangesAsync();
+                return Ok(country);
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                if (dbUpdateException.InnerException!.Message.Contains("duplicate"))
+                {
+                    return BadRequest("Ya existe una ciudad con el mismo nombre.");
+                }
+
+                return BadRequest(dbUpdateException.Message);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var contry = await _context.Countries.FirstOrDefaultAsync(x => x.Id == id);
+            if (contry == null)
+            {
+                return NotFound();
+            }
+            _context.Remove(contry);
             await _context.SaveChangesAsync();
-            return Ok(country);
+            return NoContent();
         }
     }
 }
