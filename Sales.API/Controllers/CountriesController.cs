@@ -47,7 +47,7 @@ namespace Sales.API.Controllers
             {
                 if (dbUpdateException.InnerException!.Message.Contains("duplicate"))
                 {
-                    return BadRequest("Ya existe una ciudad con el mismo nombre.");
+                    return BadRequest("Ya existe un pais con el mismo nombre.");
                 }
 
                 return BadRequest(dbUpdateException.Message);
