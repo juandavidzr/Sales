@@ -3,12 +3,12 @@
 <NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
 
 <EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
-    <DataAnnotationsValidator/>
+    <DataAnnotationsValidator />
     <div class="mb-3">
-        <label>Pais:</label>
+        <label>Estado/Departamento:</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Country.Name"/>
-            <ValidationMessage For="@(()=> Country.Name)"/>
+            <InputText class="form-control" @bind-Value="@State.Name" />
+            <ValidationMessage For="@(()=> State.Name)" />
         </div>
     </div>
     <button class="btn btn-primary" type="submit">Guardar Cambios</button>
@@ -20,7 +20,7 @@
 
     [Parameter]
     [EditorRequired]
-    public Country Country { get; set; } = null!;
+    public State State { get; set; } = null!;
 
     [Parameter]
     [EditorRequired]
@@ -34,7 +34,7 @@
 
     protected override void OnInitialized()
     {
-        editContext = new(Country);
+        editContext = new(State);
     }
 
     private async Task OnBeforeInternalNavigation(LocationChangingContext context)
@@ -45,14 +45,14 @@
             return;
         }
         var result = await sweetAlertService.FireAsync(new SweetAlertOptions
-        {
-            Title = "Confirmacion",
-            Text = "¿Deseas abandonar la pagina y perder los cambios?",
-            Icon = SweetAlertIcon.Question,
-            ShowCancelButton = true,
-            CancelButtonText = "No",
-            ConfirmButtonText = "Si"
-        });
+            {
+                Title = "Confirmacion",
+                Text = "¿Deseas abandonar la pagina y perder los cambios?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+                CancelButtonText = "No",
+                ConfirmButtonText = "Si"
+            });
 
         var confirm = !string.IsNullOrEmpty(result.Value);
         if (confirm)
