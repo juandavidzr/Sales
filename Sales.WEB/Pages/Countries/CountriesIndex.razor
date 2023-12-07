@@ -120,10 +120,7 @@
         catch (Exception ex)
         {
             await sweetAlertService.FireAsync("Error", ex.Message, SweetAlertIcon.Error);
-            
         }
-
-
 
         //var responseHttp = await repository.Get<List<Country>>("/api/countries");
         //Countries = responseHttp.Response;
