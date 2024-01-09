@@ -6,11 +6,8 @@
 
 <div class="row">
     <div class="col-md-4  offset-md-4">
-
-
         <EditForm Model="loginDTO" OnValidSubmit="LoginAsync">
             <DataAnnotationsValidator />
-
             <div class="card bg-light">
                 <div class="card-header justify-content-center">
                     <span>
@@ -33,7 +30,6 @@
                             <ValidationMessage For="@(() => loginDTO.Password)" />
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </EditForm>
@@ -52,7 +48,6 @@
             await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
             return;
         }
-
         await loginService.LoginAsync(responseHttp.Response!.Token);
         navigationManager.NavigateTo("/");
     }
