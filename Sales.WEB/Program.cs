@@ -6,6 +6,7 @@ using Sales.WEB;
 using Microsoft.AspNetCore.Components.Authorization;
 using Sales.WEB.Auth;
 using Blazored.Modal;
+using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -15,7 +16,9 @@ builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("http
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddSweetAlert2();
 builder.Services.AddBlazoredModal();
+builder.Services.AddMudServices();
 builder.Services.AddAuthorizationCore();
+
 //builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderTest>();
 
 builder.Services.AddScoped<AuthenticationProviderJWT>();
