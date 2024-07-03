@@ -15,7 +15,8 @@ namespace Sales.API.Data
         private readonly IUserHelper _userHelper;
         private readonly IFileStorage _fileStorage;
 
-        public SeedDb(DataContext context, IApiService apiService, IUserHelper userHelper, IFileStorage fileStorage)
+        public SeedDb(DataContext context, IApiService apiService, 
+                IUserHelper userHelper, IFileStorage fileStorage)
         { 
             _context = context;
             _apiService = apiService;
@@ -86,7 +87,6 @@ namespace Sales.API.Data
                 {
                     filePath = $"{Environment.CurrentDirectory}/Images/products/{image}";
                 }
-
 
                 var fileBytes = File.ReadAllBytes(filePath);
                 var imagePath = await _fileStorage.SaveFileAsync(fileBytes, "jpg", "products");
