@@ -14,6 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy("AllowAll", builder => {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });     
+});
+
 //builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen(c =>
@@ -91,6 +98,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 var app = builder.Build();
+
+app.UseCors("AllowAll");
+app.MapControllers();
+void Configure(IApplicationBuilder app, IWebHostEnvironment env) { app.UseCors("AllowAll"); }
 
 SeedData(app);
 
